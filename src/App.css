@@ -1,0 +1,13 @@
+body{
+	font-size: 110%;
+}
+
+.para-inline{
+	display: inline;
+}
+
+.center{
+	display: flex;
+	justify-content: center;
+}
+

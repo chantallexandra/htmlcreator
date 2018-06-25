@@ -1,0 +1,14 @@
+.selection-bar *{
+	padding: 8px;
+	margin: 5px;
+}
+
+
+
+select {
+	font-size: 105%;
+}
+
+select:focus{
+	outline-color: black;
+}

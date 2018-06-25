@@ -1,0 +1,44 @@
+td input[type=text]{
+	width:80px;
+	height:30px;
+	text-align: center;
+	background-color: #f2f2f2;
+	border: solid #dbdbdb 1px;
+	font-size: 95%;
+
+}
+
+td input[type=text]:focus{
+	outline-color: black;
+	background-color: #f4f4f4;
+}
+
+.thead input[type=text]{
+	font-weight: bold;
+	border-bottom: solid black 1px;
+
+}
+
+#rowsInput, #colsInput{
+	width:35px;
+	text-align: center;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 5px;
+}
+
+#rowsInput, #colsInput:focus{
+	outline-color: black;
+}
+
+button{
+	font-size: 100%;
+	background: none;
+	padding:5px;
+	margin: 8px;
+	border: 1px solid #b6f442;
+}
+
+button:focus{
+	outline: #94cc2c;
+}

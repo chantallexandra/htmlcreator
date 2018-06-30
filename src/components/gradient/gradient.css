@@ -5,3 +5,11 @@
 .c-input *{
 	margin: 5px;
 }
+
+.icon-bar{
+	background-color: #f9f9f9;
+	width: 200px;
+	margin: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}

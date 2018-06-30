@@ -1,9 +1,9 @@
 import React from 'react';
 import './display.css';
 
-const Display = ({col1, col2}) => {
+const Display = ({col1, col2, direction}) => {
 	return(
-		<div id="colorBackground" style={{ background: `linear-gradient(to right, ${col1}, ${col2})`}}>
+		<div id="colorBackground" style={{ background: `linear-gradient(to ${direction}, ${col1}, ${col2})`}}>
 
 		</div>
 	)

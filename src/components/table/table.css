@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
 td input[type=text]{
 	width:80px;
 	height:30px;
@@ -5,6 +7,7 @@ td input[type=text]{
 	background-color: #f2f2f2;
 	border: solid #dbdbdb 1px;
 	font-size: 95%;
+	margin:0;
 
 }
 
@@ -41,4 +44,32 @@ button{
 
 button:focus{
 	outline: #94cc2c;
+}
+
+.p15{
+	padding-left: 15px;
+}
+
+.p30{
+	padding-left: 30px;
+}
+
+.code{
+	font-family: 'Roboto Mono', monospace;
+	color:#4286f4;
+	max-width: 600px;
+}
+
+.writing{
+	color: black;
+}
+
+table{
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.on-top{
+	z-index: 100;
+	position: absolute;
 }

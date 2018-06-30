@@ -1,0 +1,15 @@
+.selector td{
+	width: 15px;
+	height: 15px;
+	border: 1px solid black;
+	margin: 3px;
+
+}
+.selector {
+	border-spacing: 1px;
+	border-collapse: separate;
+}
+
+/*.selector td:hover{
+	background-color: grey;
+}*/

@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import ColorPicker from './colorpicker';
 import Display from './display';
-import Icon from './icon';
 import './gradient.css';
-import Up from './svgs/up.svg';
-import Down from './svgs/down.svg';
-import Left from './svgs/left.svg';
-import Right from './svgs/right.svg';
+import Scroll from '../Scroll.js'
 
 
 class Gradient extends Component {
@@ -15,7 +11,7 @@ class Gradient extends Component {
 		this.state = {
 			color1: '#ff8080',
 			color2: '#ffbd60',
-			direction: 'right'
+			direction: 180
 		}
 	}
 
@@ -32,26 +28,40 @@ class Gradient extends Component {
 		this.setState({direction: e.target.id});
 	}
 
+	changeRange = (e) =>{
+		this.setState({direction: e.target.value})
+	}
+
+
 	render(){
 		return(
 			<div className='grad'>
-				<div className='icon-bar'>
+				<div>
 					<div className='center c-input'>
 						<ColorPicker color={this.state.color1} setColor={this.setColor1}/>
 						<ColorPicker color={this.state.color2} setColor={this.setColor2}/>
 					</div>
 					<div className='center'>
-						<Icon id={'top'} imgSrc={Up} direction={this.changeDirection}/>
-						<Icon id={'bottom'} imgSrc={Down} direction={this.changeDirection}/>
-						<Icon id={'left'} imgSrc={Left} direction={this.changeDirection}/>
-						<Icon id={'right'} imgSrc={Right} direction={this.changeDirection}/>
+						<input type="range" name='rangeslider' min="0" max="360" onInput={this.changeRange} defaultValue="180"/>
+
 					</div>
 				</div>
+
 				<div className='center'>
-					<Display col1={this.state.color1} col2={this.state.color2} direction={this.state.direction}/>
-				</div>
-				<div className='center'>
-					<p>{`background: linear-gradient(to ${this.state.direction}, ${this.state.color1}, ${this.state.color2});`}</p>
+					<div className="center w600">
+						<Display col1={this.state.color1} col2={this.state.color2} direction={this.state.direction} style={{width:"610px"}}/>
+					</div>
+					<Scroll>
+					<div className='code'>
+						<div>
+							body&#123;
+						<div className='p15'>
+							background:<span className='writing'>{`linear-gradient(${this.state.direction}deg, ${this.state.color1}, ${this.state.color2});`}</span>
+						</div>
+							&#125;
+						</div>
+					</div>
+					</Scroll>
 				</div>
 			</div>
 		)

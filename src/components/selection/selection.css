@@ -8,7 +8,3 @@
 select {
 	font-size: 105%;
 }
-
-select:focus{
-	outline-color: black;
-}

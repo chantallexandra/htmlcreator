@@ -1,0 +1,25 @@
+
+
+.header{
+	background-color: #3280ff;
+	color: white;
+	font-size: 130%;
+	/*font: Lato;*/
+
+}
+
+.header-svg{
+	width:110px;
+	height: 110px;
+	margin: 10px;
+	transition: all 1s;
+}
+
+.header-svg:hover{
+	transform: scale(1.1);
+}
+
+.header select{
+	font-size: 90%;
+}
+

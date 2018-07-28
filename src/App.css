@@ -1,7 +1,16 @@
+@import url("https://fonts.googleapis.com/css?family=PT+Sans+Narrow");
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
 body{
 	font-size: 110%;
+	font-family: 'PT Sans Narrow', sans-serif;
 }
+div{
 
+}
+*{
+	font-family: 'PT Sans Narrow', sans-serif;	
+}
 .para-inline{
 	display: inline;
 }
@@ -11,3 +20,56 @@ body{
 	justify-content: center;
 }
 
+.code, .code div, .code div > div, .code div > div >div{
+	font-family: 'Roboto Mono', monospace;
+	color:#4286f4;
+	max-width: 600px;
+}
+
+.writing {
+	font-family: 'Roboto Mono', monospace;
+	color: black;
+}
+
+.p15{
+	padding-left: 15px;
+}
+
+.p30{
+	padding-left: 30px;
+}
+
+button{
+	font-size: 100%;
+	background: none;
+	padding:5px;
+	margin: 8px;
+	border: solid #dbdbdb 1px;
+	width: 110px;
+	height: 40px;
+}
+
+
+button:hover, button:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em black;
+  transform: translateY(-0.25em);
+  outline:none;
+}
+
+button {  
+ /* color: var(--color);*/
+  transition: 0.25s;
+  
+}
+
+input[type='text']:focus{
+	outline: none;
+	border: none;
+	box-shadow: 0 0.5em 0.5em -0.4em black;
+	border: solid #dbdbdb 1px;
+}
+
+input[type='text']{
+	font-size: 95%;
+
+}

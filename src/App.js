@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Selection from './components/selection/selection'
-import Gradient from './components/gradient/gradient';
-import Table from './components/table/table';
+import Header from './components/header/header'
+import tool from './tool';
 import './App.css';
 
 
@@ -18,17 +18,11 @@ class App extends Component {
     this.setState({inputSelect: e.target.value})
   }
 
-
   render() {
-    if(this.state.inputSelect === 'gradient'){
-      this.show = <Gradient />
-    }else if(this.state.inputSelect === 'table'){
-      this.show = <Table />
-    }else{
-      this.show = <p></p>
-      }
+    this.show = tool[this.state.inputSelect]
     return (
       <div>
+        <Header />
         <Selection  select={this.onSelection}/>
         {this.show}
       </div>

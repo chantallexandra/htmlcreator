@@ -12,19 +12,19 @@ class Size extends Component{
 			cols: 3,
 			max: 10,
 			min: 3
+
 		}
 		
 	}
 
 	tableHover = (e) => {
 		var x = document.getElementById(e.target.id)
-		var height = Number((String(e.target.id)).substring(5,6)) + 1
-		var width = Number((String(e.target.id)).substring(3,4)) + 1
-		console.log(height,width)
+		var height = Number((String(e.target.id)).substring(9,10)) + 1
+		var width = Number((String(e.target.id)).substring(7,8)) + 1
 		x.style.backgroundColor = 'grey';
 		for(let i = 0; i < width; i++){
 			for(let j = 0; j < height; j++){
-				document.getElementById(`in-${i}-${j}`).style.backgroundColor = 'grey';
+				document.getElementById(`select-${i}-${j}`).style.backgroundColor = '#91bbff';
 			}	
 		}
 		if(height < this.state.max){
@@ -43,12 +43,12 @@ class Size extends Component{
 
 	tableLeave = (e) => {
 		var x = document.getElementById(e.target.id)
-		var height = (String(e.target.id)).substring(5,6)
-		var width = (String(e.target.id)).substring(3,4)
+		var height = (String(e.target.id)).substring(9,10)
+		var width = (String(e.target.id)).substring(7,8)
 		x.style.backgroundColor = 'white';
 		for(let i = 0; i <= width; i++){
 			for(let j = 0; j <= height; j++){
-				document.getElementById(`in-${i}-${j}`).style.backgroundColor = 'white';
+				document.getElementById(`select-${i}-${j}`).style.backgroundColor = 'white';
 			}	
 		}
 	}
@@ -63,11 +63,11 @@ class Size extends Component{
 	      let children2 = []
 	      //Inner loop to create children
 	      for (let j = 0; j < col; j++) {
-	      	children2.push(<td key={`in-${i}-${j}`} onMouseOver={this.tableHover} onMouseOut={this.tableLeave} onClick={this.props.tableChoose} id={`in-${i}-${j}`}></td>)
+	      	children2.push(<td key={`select-${i}-${j}`} onMouseOver={this.tableHover} onMouseOut={this.tableLeave} onClick={this.props.tableChoose} id={`select-${i}-${j}`}></td>)
 
 	      }
 	      //Create the parent and add the children
-	      table2.push(<tr key={`in-${i}`}>{children2}</tr>)
+	      table2.push(<tr key={`select-${i}`}>{children2}</tr>)
 	      
 	      
 	    }

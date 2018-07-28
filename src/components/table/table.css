@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
 
 td input[type=text]{
 	width:80px;
@@ -6,62 +6,33 @@ td input[type=text]{
 	text-align: center;
 	background-color: #f2f2f2;
 	border: solid #dbdbdb 1px;
-	font-size: 95%;
 	margin:0;
 
 }
 
 td input[type=text]:focus{
-	outline-color: black;
-	background-color: #f4f4f4;
+	background-color: #e0e0e0;
+	box-shadow: none;
 }
 
 .thead input[type=text]{
+	background-color: #edf1f7;
 	font-weight: bold;
-	border-bottom: solid black 1px;
+	border-bottom: solid black 2px;
+	margin: 0;
 
 }
 
+.thead input[type=text]:focus{
+	border-bottom: solid black 2px;
+}
+
 #rowsInput, #colsInput{
-	width:35px;
+	width:50px;
 	text-align: center;
 	margin-left: 5px;
 	margin-right: 5px;
 	padding: 5px;
-}
-
-#rowsInput, #colsInput:focus{
-	outline-color: black;
-}
-
-button{
-	font-size: 100%;
-	background: none;
-	padding:5px;
-	margin: 8px;
-	border: 1px solid #b6f442;
-}
-
-button:focus{
-	outline: #94cc2c;
-}
-
-.p15{
-	padding-left: 15px;
-}
-
-.p30{
-	padding-left: 30px;
-}
-
-.code{
-	font-family: 'Roboto Mono', monospace;
-	color:#4286f4;
-	max-width: 600px;
-}
-
-.writing{
-	color: black;
 }
 
 table{
@@ -70,6 +41,27 @@ table{
 }
 
 .on-top{
-	z-index: 100;
+	z-index: 10;
 	position: absolute;
+	background-color: white;
+	padding:3px;
 }
+
+.delete-menu{
+	visibility: hidden;
+	border: 2px solid blue;
+	position: absolute;
+	z-index: 10;
+	background-color: white;
+}
+
+.list-menu{
+	transition: all 1s;
+	margin: 0;
+	padding: 2px;
+}
+
+.list-menu:hover{
+	background-color: #e8e8e8;
+}
+

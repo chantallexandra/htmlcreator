@@ -9,14 +9,54 @@ class Table extends Component {
 		super();
 		this.state = {
 			rows: 3,
-			cols: 2
+			cols: 2,
+			minInputPix: 80,
+			maxInputPix: 120,
+			headers: [80,80]
 		}
 	}
 
-	changeTable(e){
+	changeTable = (e) =>{
 		var eId = (e.target.id).substring(3);
 		document.getElementById(`out-${eId}`).innerHTML = `&lt;td&gt;<span class='writing'>${e.target.value}</span>&lt;&#47;td&gt;`
+		var col = Number(e.target.id.substring(5))
+		var row = 0
+		var rows = this.state.rows
+		var maxPix = this.state.maxInputPix
+		var minPix = this.state.minInputPix
+		// Assuming each char takes about 12 pixels
+		let pix = e.target.value.length * 12 
+		//Checking if new size is larger than only size
+		if( pix > minPix ){
+			var header = Number((document.getElementById(`in-0-${col}`).style.width).replace("px",""))
+			var lrg = pix > header ? pix : header
+			var width = lrg < maxPix ? lrg : maxPix
+			//Change width in header array
+			let arryCopy = [...this.state.headers]
+		  	arryCopy[col] = width
+		  	this.setState({headers: arryCopy});
+		}
 
+		while(row < rows){
+			document.getElementById(`in-${row}-${col}`).style.width = `${width}px`
+			row ++
+		}
+
+	}
+
+	deleteTable = (e) =>{
+		let d = document.getElementById('delBox')
+		this.setState({deletedId: e.target.id})
+		d.style.visibility = "visible"
+		d.style.left = e.pageX+'px'
+		d.style.top = e.pageY+'px'
+		d.focus()
+	}
+
+	deleteDisable = () =>{
+		let d = document.getElementById('delBox')
+		d.style.visibility = "hidden"
+		
 	}
 
 	createTable = (col, row) => {
@@ -24,16 +64,18 @@ class Table extends Component {
 		let tbody = []
 	    let table = []
 
+	    const headers = this.state.headers
+
 	    // Outer loop to create parent
 	    for (let i = 0; i < row; i++) {
 	      let children = []
 	      //Inner loop to create children
+
 	      for (let j = 0; j < col; j++) {
 	      	if(i === 0){
-	      		//head
-	      		children.push(<td key={`in-${i}-${j}`} className='thead'><input id={`in-${i}-${j}`} type='text' onInput={this.changeTable}/></td>)
+	      		children.push(<td key={`in-${i}-${j}`} className='thead'><input id={`in-${i}-${j}`} type='text' onDoubleClick={this.deleteTable} onInput={this.changeTable}/></td>)
 	      	}else{
-	      		children.push(<td key={`in-${i}-${j}`}><input type="text" id={`in-${i}-${j}`} onInput={this.changeTable}/></td>)
+	      		children.push(<td key={`in-${i}-${j}`}><input type="text" id={`in-${i}-${j}`}  style={{width: `${headers[j]}px`}} onDoubleClick={this.deleteTable} onInput={this.changeTable}/></td>)
 	      	} 
 	      }
 	      //Create the parent and add the children
@@ -70,29 +112,77 @@ class Table extends Component {
 	      }
 	     	
 	    }
-	    table.push(<div className='p15' key={`out`}>&lt;&#47;tbody&gt;</div>)
+	    if(row > 1){ //there needs to be atleast one row other than the head to have a body
+	    	table.push(<div className='p15' key={`out`}>&lt;&#47;tbody&gt;</div>)
+	    }
+
 	    return table
 
 	  }
 
 	  addRow = () => {
-	  	this.setState({rows: this.state.rows + 1})
+	  	this.setState((prevState, props) => ({
+		  rows: prevState.rows + 1
+		}));
+	  	//this.setState({rows: this.state.rows + 1})
 	  }
 
 	  addCol = () => {
-	  	this.setState({cols: this.state.cols + 1})
+	  	let arryCopy = [...this.state.headers]
+	  	arryCopy.push(80)
+	  	this.setState((prevState, props) => ({
+		  cols: prevState.cols + 1,
+		  headers: arryCopy
+		}));
 	  }
 
-	 adjustSize = () => {
-	 	var c = Number(document.getElementById("colsInput").value);
-	 	var r = Number(document.getElementById("rowsInput").value);
-	 	this.setState({rows: r, cols: c})
+	  delRow = () =>{
+	  	this.setState((prevState, props) => ({
+		  rows: prevState.rows > 1 ? prevState.rows - 1 : 1
+		}));
+	  }
+
+	  delCol = () => {
+	    let arryCopy = [...this.state.headers]
+	    this.state.cols > 1 ? arryCopy.pop() : arryCopy
+	  	this.setState((prevState, props) => ({
+		  cols: prevState.cols > 1 ? prevState.cols - 1 : 1,
+		  headers: arryCopy
+		}));
+	  }
+
+	 adjustSize = (e) => {
+	 	if(e.keyCode === 13){
+		 	var colVal = document.getElementById("colsInput").value
+		 	var rowVal = document.getElementById("rowsInput").value
+		 	if(isNaN(colVal)){
+		 		var c = 1
+		 	}else{
+		 		var c = Number(document.getElementById("colsInput").value) < 1 ? 1 : Number(document.getElementById("colsInput").value);		 		
+		 	}
+		 	if(isNaN(rowVal)){
+		 		var r = 1
+		 	}else{
+		 		var r = Number(document.getElementById("rowsInput").value) < 1 ? 1 : Number(document.getElementById("rowsInput").value);	
+		 	}
+
+	 		this.setState({rows: r, cols: c})
+	 	}
 	 }
 
 	clickSize = (e) => {
-	 	var height = (String(e.target.id)).substring(5,6)
-		var width = (String(e.target.id)).substring(3,4)
+		var height = (String(e.target.id)).substring(9,10)
+		var width = (String(e.target.id)).substring(7,8)
 		this.setState({rows: Number(width) + 1, cols: Number(height) + 1})
+
+	 }
+
+	 componentDidMount(){
+	 	document.addEventListener("keydown", this.adjustSize, false)
+	 }
+
+	 componentWillUnmount(){
+	 	document.removeEventListener("keydown", this.adjustSize, false)
 	 }
 
 	render(){
@@ -101,12 +191,20 @@ class Table extends Component {
 			<div>
 				<div className='center'>
 					<p>Size:<input id="rowsInput" type="text" placeholder="Rows"/> x<input id="colsInput" type="text" placeholder="Cols"/> 
-					<button onClick={this.adjustSize}>Set</button></p>
-					<Size tableChoose={this.clickSize} className='on-top'/>
+					</p>
+
 				</div>	
+				<div className='center' style={{height: "67px"}}>
+					<div className='on-top'>
+						<Size tableChoose={this.clickSize} className='on-top'/>
+					</div>
+				</div>
+
 				<div className='center'>
 					<button onClick={this.addRow}>Add Row</button><button onClick={this.addCol}>Add Column</button>
+
 				</div>
+
 				<div className = 'center'>
 					<Scroll>
 						<div className='center'>
@@ -124,6 +222,12 @@ class Table extends Component {
 							</div>
 						</div>
 					</Scroll>
+				</div>
+				{//Div which appears on double click
+				}
+				<div className="delete-menu" onBlur={this.deleteDisable} id="delBox" tabIndex="1">
+					<p className="list-menu" onClick={this.delRow}>Delete Last Row</p>
+					<p className="list-menu" onClick={this.delCol}>Delete Last Column</p>
 				</div>
 			</div>
 		)

@@ -46,7 +46,6 @@ class Table extends Component {
 
 	deleteTable = (e) =>{
 		let d = document.getElementById('delBox')
-		this.setState({deletedId: e.target.id})
 		d.style.visibility = "visible"
 		d.style.left = e.pageX+'px'
 		d.style.top = e.pageY+'px'
@@ -56,7 +55,6 @@ class Table extends Component {
 	deleteDisable = () =>{
 		let d = document.getElementById('delBox')
 		d.style.visibility = "hidden"
-		
 	}
 
 	createTable = (col, row) => {
@@ -73,7 +71,7 @@ class Table extends Component {
 
 	      for (let j = 0; j < col; j++) {
 	      	if(i === 0){
-	      		children.push(<td key={`in-${i}-${j}`} className='thead'><input id={`in-${i}-${j}`} type='text' onDoubleClick={this.deleteTable} onInput={this.changeTable}/></td>)
+	      		children.push(<td key={`in-${i}-${j}`} className='thead'><input id={`in-${i}-${j}`} type='text' style={{width: `${headers[j]}px`}} onDoubleClick={this.deleteTable} onInput={this.changeTable}/></td>)
 	      	}else{
 	      		children.push(<td key={`in-${i}-${j}`}><input type="text" id={`in-${i}-${j}`}  style={{width: `${headers[j]}px`}} onDoubleClick={this.deleteTable} onInput={this.changeTable}/></td>)
 	      	} 
@@ -91,7 +89,7 @@ class Table extends Component {
 	    return t
   	}
 
-	  createTablehtml = (col, row) => {
+	createTablehtml = (col, row) => {
 
 	  	let table =[]
 	  	for (let i = 0; i < row; i++) {
@@ -144,7 +142,9 @@ class Table extends Component {
 
 	  delCol = () => {
 	    let arryCopy = [...this.state.headers]
-	    this.state.cols > 1 ? arryCopy.pop() : arryCopy
+	    if(this.state.cols){
+			arryCopy.pop()
+	    }
 	  	this.setState((prevState, props) => ({
 		  cols: prevState.cols > 1 ? prevState.cols - 1 : 1,
 		  headers: arryCopy
@@ -155,26 +155,39 @@ class Table extends Component {
 	 	if(e.keyCode === 13){
 		 	var colVal = document.getElementById("colsInput").value
 		 	var rowVal = document.getElementById("rowsInput").value
-		 	if(isNaN(colVal)){
-		 		var c = 1
-		 	}else{
-		 		var c = Number(document.getElementById("colsInput").value) < 1 ? 1 : Number(document.getElementById("colsInput").value);		 		
-		 	}
-		 	if(isNaN(rowVal)){
-		 		var r = 1
-		 	}else{
-		 		var r = Number(document.getElementById("rowsInput").value) < 1 ? 1 : Number(document.getElementById("rowsInput").value);	
-		 	}
-
-	 		this.setState({rows: r, cols: c})
+		 	//If there is a number entered, check that it is greater than 1
+		 	this.setSize(colVal, rowVal)
 	 	}
 	 }
 
 	clickSize = (e) => {
-		var height = (String(e.target.id)).substring(9,10)
-		var width = (String(e.target.id)).substring(7,8)
-		this.setState({rows: Number(width) + 1, cols: Number(height) + 1})
+		var colVal = parseInt((String(e.target.id)).substring(9,10), 10) + 1
+		var rowVal = parseInt((String(e.target.id)).substring(7,8), 10) + 1
+		// this.setState({rows: Number(width) + 1, cols: Number(height) + 1})
+		this.setSize(colVal, rowVal)
 
+	 }
+
+	 setSize = (colVal, rowVal) => {
+	 	colVal = parseInt(colVal, 10)
+	 	rowVal = parseInt(rowVal, 10)
+ 		if(!isNaN(colVal) && colVal !== ''){
+	 		var c = colVal < 1 ? 1 : colVal;	
+	 		let arryCopy = [...this.state.headers]
+	 		if(c < arryCopy.length){
+	 			arryCopy.length = c
+	 		}else{
+	 			while(c < arryCopy.length){
+	 				arryCopy.push(80)
+	 			}
+	 		}
+	 		this.setState({cols: c, headers: arryCopy})
+
+	 	}
+	 	if(!isNaN(rowVal) && rowVal !== ''){
+	 		var r = rowVal < 1 ? 1 : rowVal;	
+	 		this.setState({rows: r})
+	 	}
 	 }
 
 	 componentDidMount(){
@@ -207,6 +220,9 @@ class Table extends Component {
 
 				<div className = 'center'>
 					<Scroll>
+						<div className='message-box'>
+							<p>Double click table<br /> for delete options</p>
+						</div>
 						<div className='center'>
 							{this.createTable(this.state.cols, this.state.rows)}
 						</div>

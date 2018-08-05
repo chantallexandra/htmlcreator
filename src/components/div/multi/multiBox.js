@@ -44,7 +44,8 @@ class MultiBox extends Component {
 		if(this.state.display === 'css'){
 			var show = <MultiCSS doubleClick={this.changeDisplay}>
 							justify-content: <span className='writing'>{this.state.halign};</span> <br />
-							align-items: <span className='writing'>{this.state.valign};</span>
+							align-items: <span className='writing'>{this.state.valign};</span><br />
+							flex-direction: <span className='writing'>{this.state.direction}</span>
 						</MultiCSS>
 						
 		} else{

@@ -98,7 +98,12 @@ class Table extends Component {
 	      for (let j = 0; j < col; j++) {
 	      	var inp = document.getElementById(`in-${i}-${j}`);
 	      	var x = inp !== null ? inp.value : "";
-	        children.push(<div className='p15' id={`out-${i}-${j}`} key={`out-${i}-${j}`}>&lt;td&gt;<span className='writing'>{x}</span>&lt;&#47;td&gt;</div>)
+	      	if (i == 0){
+	      		children.push(<div className='p15' id={`out-${i}-${j}`} key={`out-${i}-${j}`}>&lt;th&gt;<span className='writing'>{x}</span>&lt;&#47;th&gt;</div>)
+	      	}
+	      	else{
+	        	children.push(<div className='p15' id={`out-${i}-${j}`} key={`out-${i}-${j}`}>&lt;td&gt;<span className='writing'>{x}</span>&lt;&#47;td&gt;</div>)
+	      	}
 	        
 	      }
 	      if(i === 0){
